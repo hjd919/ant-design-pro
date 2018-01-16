@@ -84,6 +84,9 @@ export const getRouterData = (app) => {
       // name: '工作台',
       // authority: 'admin',
     },
+    '/thread/real_thread': {
+      component: dynamicWrapper(app, ['thread'], () => import('../routes/Thread/RealThread')),
+    },
     '/form/basic-form': {
       component: dynamicWrapper(app, ['form'], () => import('../routes/Forms/BasicForm')),
     },

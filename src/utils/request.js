@@ -2,6 +2,7 @@ import fetch from 'dva/fetch';
 import { notification } from 'antd';
 import { routerRedux } from 'dva/router';
 import store from '../index';
+import domain from '../config';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据',
@@ -44,8 +45,9 @@ function checkStatus(response) {
  */
 export default function request(url, options) {
   const defaultOptions = {
-    credentials: 'include',
+    // credentials: 'include',
   };
+  
   const newOptions = { ...defaultOptions, ...options };
   if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
     newOptions.headers = {
@@ -84,4 +86,18 @@ export default function request(url, options) {
         dispatch(routerRedux.push('/exception/404'));
       }
     });
+}
+
+export function requestApi(url, options) {
+  return request(domain + url, options)
+}
+
+export function requestAuthApi(url, options = {}) {
+
+  // 从localStorage获取token,附加到请求header参数中
+  options.headers = {
+    Authorization: 'Bearer ' + localStorage.token
+  }
+
+  return requestApi(url, options)
 }

@@ -16,6 +16,15 @@ const menuData = [{
     // hideInMenu: true,
   }],
 }, {
+  name: '帖子管理',
+  icon: 'table',
+  path: 'thread',
+  children: [{
+    name: '真人帖',
+    path: 'real_thread',
+  }],
+}, 
+/*{
   name: '表单页',
   icon: 'form',
   path: 'form',
@@ -118,7 +127,7 @@ const menuData = [{
   icon: 'book',
   path: 'http://pro.ant.design/docs/getting-started',
   target: '_blank',
-}];
+}*/];
 
 function formatter(data, parentPath = '', parentAuthority) {
   return data.map((item) => {

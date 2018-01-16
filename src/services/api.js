@@ -1,5 +1,5 @@
 import { stringify } from 'qs';
-import request from '../utils/request';
+import request, { requestApi } from '../utils/request';
 
 export async function queryProjectNotice() {
   return request('/api/project/notice');
@@ -8,6 +8,17 @@ export async function queryProjectNotice() {
 export async function queryActivities() {
   return request('/api/activities');
 }
+
+// thread
+export async function queryThread(params) {
+  return requestApi(`/backend/thread?${stringify(params)}`);
+}
+
+export async function deleteThread(params) {
+  return requestApi(`/backend/deleteThread?${stringify(params)}`);
+}
+
+// ---
 
 export async function queryRule(params) {
   return request(`/api/rule?${stringify(params)}`);
