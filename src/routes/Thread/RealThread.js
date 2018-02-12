@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'dva';
-import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message } from 'antd';
+import { Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message, Divider} from 'antd';
 import BackendList from '../../components/BackendList';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import moment from 'moment';
@@ -275,10 +275,11 @@ export default class RealThread extends PureComponent {
     }
 
     const tid = e.target.getAttribute('data-id')
+    const uid = e.target.getAttribute('data-uid')
 
     this.props.dispatch({
       type: 'thread/deleteThread',
-      payload: { tid },
+      payload: { tid, uid },
     }).then(response => {
       message.success(response.message);
     });
@@ -342,7 +343,11 @@ export default class RealThread extends PureComponent {
       {
         title: '操作',
         render: (text, record) => (
-            <a href="javascript:;" onClick={this.deleteThread} data-id={record.tid}>删除</a>
+          <Fragment>
+            <a href="javascript:;" onClick={this.deleteThread} data-id={record.tid} data-uid="0">删除</a>
+            <Divider type="vertical" />
+            <a href="javascript:;" onClick={this.deleteThread} data-id={record.tid} data-uid={record.uid}>删除并拉黑用户</a>
+          </Fragment>
         ),
       },
     ];
