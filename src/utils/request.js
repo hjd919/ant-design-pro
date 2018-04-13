@@ -2,7 +2,7 @@ import fetch from 'dva/fetch';
 import { notification } from 'antd';
 import { routerRedux } from 'dva/router';
 import store from '../index';
-import domain from '../config';
+import config from '../config';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据',
@@ -47,7 +47,7 @@ export default function request(url, options) {
   const defaultOptions = {
     // credentials: 'include',
   };
-  
+
   const newOptions = { ...defaultOptions, ...options };
   if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
     newOptions.headers = {
@@ -68,28 +68,28 @@ export default function request(url, options) {
     })
     .catch((e) => {
       const { dispatch } = store;
-      if (e.name === 401) {
+      if (e.code === 401) {
         dispatch({
           type: 'login/logout',
         });
         return;
       }
-      if (e.name === 403) {
+      if (e.code === 403) {
         dispatch(routerRedux.push('/exception/403'));
         return;
       }
-      if (e.name <= 504 && e.name >= 500) {
+      if (e.code <= 504 && e.code >= 500) {
         dispatch(routerRedux.push('/exception/500'));
         return;
       }
-      if (e.name >= 404 && e.name < 422) {
+      if (e.code >= 404 && e.code < 422) {
         dispatch(routerRedux.push('/exception/404'));
       }
     });
 }
 
 export function requestApi(url, options) {
-  return request(domain + url, options)
+  return request(config.domain + url, options)
 }
 
 export function requestAuthApi(url, options = {}) {

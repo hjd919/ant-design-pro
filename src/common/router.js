@@ -69,6 +69,12 @@ function getFlatMenuData(menus) {
 
 export const getRouterData = (app) => {
   const routerConfig = {
+    '/game_ad/index': {
+      component: dynamicWrapper(app, ['game_ad'], () => import('../routes/GameAds/index')),
+    },
+    '/game_ad/store': {
+      component: dynamicWrapper(app, ['game_ad'], () => import('../routes/GameAds/store')),
+    },
     '/': {
       component: dynamicWrapper(app, ['user', 'login'], () => import('../layouts/BasicLayout')),
     },
